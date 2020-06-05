@@ -1,40 +1,27 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
-
-[travis-image]: https://api.travis-ci.org/nestjs/nest.svg?branch=master
-[travis-url]: https://travis-ci.org/nestjs/nest
-[linux-image]: https://img.shields.io/travis/nestjs/nest/master.svg?label=linux
-[linux-url]: https://travis-ci.org/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="blank">Node.js</a> framework for building efficient and scalable server-side applications, heavily inspired by <a href="https://angular.io" target="blank">Angular</a>.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/package/nest-csv-parser"><img src="https://img.shields.io/npm/v/nest-csv-parser.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/package/nest-csv-parser"><img src="https://img.shields.io/npm/l/nest-csv-parser.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/package/nest-csv-parser"><img src="https://img.shields.io/npm/dm/nest-csv-parser.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/mCzolko/nest-csv-parser"><img src="https://circleci.com/gh/mCzolko/nest-csv-parser.svg?style=svg" alt="CircleCI Builds" /></a>
-<a href='https://coveralls.io/github/mCzolko/nest-csv-parser?branch=master'><img src='https://coveralls.io/repos/github/mCzolko/nest-csv-parser/badge.svg?branch=master' alt='Coverage Status' /></a>
-</p>
-
 # CSV Parser for NestJS
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+[Nest](https://github.com/nestjs/nest) framework library.
 
 Wrapper for [csv-parser library](https://github.com/mafintosh/csv-parser)
+
+This project is a fork of the original [nest-csv-parser](https://github.com/mCzolko/nest-csv-parser).
+
+Additions in this version:
+* The ability to inspect the headers that were parsed (via the `ParsedData.headers` field)
 
 ## Installation
 
 ```bash
-$ npm install nest-csv-parser
+$ npm install @jynnantonnyx/nest-csv-parser
 # or if you using Yarn
-$ yarn add nest-csv-parser
+$ yarn add @jynnantonnyx/nest-csv-parser
 ```
 
-Add nest-csv-parser as a dependency.
+Add `@jynnantonnyx/nest-csv-parser` as a dependency.
 
 ```js
 import { Module } from '@nestjs/common'
-import { CsvModule } from 'nest-csv-parser'
+import { CsvModule } from '@jynnantonnyx/nest-csv-parser'
 // ...imports of your app dependecies
 
 @Module({
@@ -55,7 +42,7 @@ Parser will create instance of entity for each line in CSV stream.
 ```js
 // app.parser.ts
 import { Injectable } from '@nestjs/common'
-import { CsvParser } from 'nest-csv-parser'
+import { CsvParser } from '@jynnantonnyx/nest-csv-parser'
 
 class Entity {
   foo: string
@@ -70,10 +57,14 @@ export class AppService {
 
   async parse() {
     // Create stream from file (or get it from S3)
-    const stream = fs.createReadStream(__dirname + '/some.csv')
-    const entities: Entity[] = await csvParser.parse(stream, Entity)
+    const stream = fs.createReadStream(__dirname + '/some.csv');
+    const data: ParsedData<Entitiy> data = await csvParser.parse(stream, Entity);
+    const entities: Entity[] = data.list;
 
-    return entities
+    // Inspect headers
+    const headers: string[] = data.headers;
+
+    return entities;
   }
 }
 ```
@@ -120,25 +111,19 @@ Just a configuration object  for [csv-parser library](https://github.com/mafinto
 
 ```bash
 # clone repository
-$ git clone git@github.com:mCzolko/nest-csv-parser.git
+$ git clone git@github.com:jynnantonnyx/nest-csv-parser.git
 $ cd nest-csv-parser
 
 # install dependencies
-$ yarn install
+$ npm install
 
 # watch mode
-$ yarn test:watch
+$ npm test:watch
 ```
 
 ## Test
 
 ```bash
 # unit tests
-$ yarn test
+$ npm test
 ```
-
-## Author
-
-Michael Czolko
-
-[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/N4N3145WR)
