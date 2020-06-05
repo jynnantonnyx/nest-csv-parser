@@ -1,9 +1,27 @@
 {
-  "name": "nest-csv-parser",
-  "version": "2.0.0",
-  "description": "CSV parser for NestJS framework",
-  "author": "Michael Czolko <michael@czolko.cz>",
+  "name": "@jynnantonnyx/nest-csv-parser",
+  "version": "2.1.0",
+  "description": "CSV parser for NestJS framework (forked from original nest-csv-parser)",
+  "main": "index.ts",
+  "author": "Chad Patten <cpatten@cpatten.com>",
+  "contributors": [
+    "Michael Czolko <michael@czolko.cz>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jynnantonnyx/nest-csv-parser.git"
+  },
+  "keywords": [
+    "csv",
+    "parse",
+    "nest",
+    "nestjs"
+  ],
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jynnantonnyx/nest-csv-parser/issues"
+  },
+  "homepage": "https://github.com/jynnantonnyx/nest-csv-parser#readme",
   "scripts": {
     "compile": "tsc -p tsconfig.json",
     "build": "rm tsconfig.tsbuildinfo || rm -rf dist && tsc -p tsconfig.json",
@@ -25,21 +43,21 @@
     "class-transformer": "0.2.3",
     "csv-parser": "2.3.2",
     "reflect-metadata": "0.1.13",
-    "rxjs": "6.5.3"
+    "rxjs": "^6.5.5"
   },
   "devDependencies": {
     "@nestjs/testing": "6.11.11",
-    "@types/jest": "25.2.2",
-    "@types/node": "11.15.12",
+    "@types/jest": "^25.2.3",
+    "@types/node": "^11.15.14",
     "coveralls": "3.1.0",
-    "jest": "24.9.0",
+    "jest": "^24.9.0",
     "prettier": "1.18.2",
-    "ts-jest": "24.0.2",
+    "ts-jest": "^24.3.0",
     "ts-node": "8.3.0",
     "tsc-watch": "3.0.1",
-    "tsconfig-paths": "3.8.0",
-    "tslint": "5.20.0",
-    "typescript": "3.9.2"
+    "tsconfig-paths": "^3.9.0",
+    "tslint": "^5.20.1",
+    "typescript": "^3.9.5"
   },
   "jest": {
     "moduleFileExtensions": [

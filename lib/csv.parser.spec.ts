@@ -68,6 +68,14 @@ describe('CsvParser', () => {
       expect(entities.list[0]).toStrictEqual(csv2);
     });
 
+    it('should return list of 2 headers', async () => {
+      const csvStream = fs.createReadStream(__dirname + '/../tests/simple.csv');
+      const entities = await csvParser.parse(csvStream, CsvEntity);
+      const headers = ['foo', 'bar'];
+
+      expect(entities.headers).toStrictEqual(headers);
+    });
+
     it('should return list of 2 separated by commma', async () => {
       const csvStream = fs.createReadStream(__dirname + '/../tests/simple.comma-separated.csv');
       const entities = await csvParser.parse(csvStream, CsvEntity, null, null, { separator: ',' });
@@ -84,9 +92,11 @@ describe('CsvParser', () => {
       const csvStream = fs.createReadStream(__dirname + '/../tests/invalid.csv');
       await expect(csvParser.parse(csvStream, CsvEntity))
         .rejects
-        .toStrictEqual({ errors: [
-          RangeError('Row length does not match headers'),
-        ] });
+        .toStrictEqual({
+          errors: [
+            RangeError('Row length does not match headers'),
+          ]
+        });
     });
 
   });
@@ -97,10 +107,12 @@ describe('CsvParser', () => {
       const csvStream = fs.createReadStream(__dirname + '/../tests/invalid.multiple.csv');
       await expect(csvParser.parse(csvStream, CsvEntity))
         .rejects
-        .toStrictEqual({ errors: [
-          RangeError('Row length does not match headers'),
-          RangeError('Row length does not match headers'),
-        ] });
+        .toStrictEqual({
+          errors: [
+            RangeError('Row length does not match headers'),
+            RangeError('Row length does not match headers'),
+          ]
+        });
     });
 
   });
@@ -126,9 +138,11 @@ describe('CsvParser', () => {
       const entities = await csvParser.parse(csvStream, CsvEntityRemaped);
       const csv1 = new CsvEntityRemaped({ id: 1, value: 'a', nothing: 'x' });
       const csv2 = new CsvEntityRemaped({ id: 2, value: 'b', nothing: 'y' });
+      const headers = ['foo', 'bar', 'nothing'];
 
       expect(entities.list[0]).toStrictEqual(csv1);
       expect(entities.list[1]).toStrictEqual(csv2);
+      expect(entities.headers).toStrictEqual(headers);
     });
 
   });

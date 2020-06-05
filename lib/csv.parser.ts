@@ -7,8 +7,9 @@ import { getCsvKey } from './csvkey.decorator';
 export interface ParsedData<T> {
   list: T[];
   total: number;
-  count: number|null;
-  offset: number|null;
+  count: number | null;
+  offset: number | null;
+  headers: string[] | null;
 }
 
 @Injectable()
@@ -19,6 +20,7 @@ export class CsvParser {
       let c = 0;
       const list = [];
       const errors = [];
+      const headers = [];
 
       const pipedStream = stream.pipe(csv({
         strict: true,
@@ -30,6 +32,10 @@ export class CsvParser {
         errors.push(e);
 
         reject({ errors });
+      });
+
+      pipedStream.on('headers', hs => {
+        hs.forEach(h => headers.push(h));
       });
 
       pipedStream.on('data', line => {
@@ -54,11 +60,12 @@ export class CsvParser {
         'end',
         () => errors.length > 0 ?
           reject({ errors })
-        :
+          :
           resolve({
             list,
             count,
             offset,
+            headers,
             total: i,
           }),
       );
