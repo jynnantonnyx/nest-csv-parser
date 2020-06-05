@@ -2,7 +2,7 @@
   "name": "@jynnantonnyx/nest-csv-parser",
   "version": "2.1.0",
   "description": "CSV parser for NestJS framework (forked from original nest-csv-parser)",
-  "main": "index.ts",
+  "main": "index.js",
   "author": "Chad Patten <cpatten@cpatten.com>",
   "contributors": [
     "Michael Czolko <michael@czolko.cz>"
